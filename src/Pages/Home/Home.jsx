@@ -24,36 +24,48 @@ const Home = () => {
 
       <div className='main__header__search'>
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" placeholder='Search for country...' />
+        <input type="text" placeholder='Search for country...' onChange={(e)=>{
+          axios.get(`https://restcountries.com/v3.1/name/${e.target.value}`).then(res=>{
+            setData([...res.data])
+          })
+        }}/>
       </div>
 
       <div className='main__header__select'>
         <>
           <Select
+            
             defaultValue="Filter by region"
             style={{
               width: 192, 
             }}
-            onChange={handleChange}
+            onChange={(e) => {handleChange()
+              axios
+                .get(`https://restcountries.com/v3.1/region/${e.target.value}`)
+                .then((res) => setData([...res.data]))
+                
+            }
+            
+          }
             options={[
               {
-                value: 'africa',
+                value: 'Africa',
                 label: 'Africa',
               },
               {
-                value: 'americas',
+                value: 'Americas',
                 label: 'Americas',
               },
               {
-                value: 'asia',
+                value: 'Asia',
                 label: 'Asia',
               },
               {
-                value: 'europa',
+                value: 'Europa',
                 label: 'Europa',
               },
               {
-                value: 'oceania',
+                value: 'Oceania',
                 label: 'Oceania',
               },
             ]}
